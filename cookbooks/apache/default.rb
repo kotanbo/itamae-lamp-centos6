@@ -15,13 +15,14 @@ file "/etc/httpd/conf/httpd.conf" do
   only_if "test -f /etc/httpd/conf/httpd.conf"
 end
  
-execute "add www user" do
+execute "add apache user to www group" do
   user "root"
   command <<-EOS
     useradd www
     gpasswd -a apache www
     chown -R www:www /var/www/html
   EOS
+  only_if "grep -q www /etc/passwd"
 end
 
 service "httpd" do
