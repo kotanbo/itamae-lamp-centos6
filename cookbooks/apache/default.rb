@@ -22,7 +22,7 @@ execute "add apache user to www group" do
     gpasswd -a apache www
     chown -R www:www /var/www/html
   EOS
-  only_if "grep -q www /etc/passwd"
+  not_if "grep www /etc/passwd"
 end
 
 service "httpd" do
