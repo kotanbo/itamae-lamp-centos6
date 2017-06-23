@@ -32,6 +32,19 @@ when 6
   end
 end
 
+# libcurl更新
+package "http://www.city-fan.org/ftp/contrib/yum-repo/city-fan.org-release-1-13.rhel#{node[:platform_version].to_i}.noarch.rpm" do
+  not_if "rpm -q 'city-fan.org-release-1-13.rhel#{node[:platform_version].to_i}.noarch'"
+end
+file "/etc/yum.repos.d/city-fan.org.repo" do
+  user "root"
+  action :edit
+  block do |content|
+    content.gsub!("enabled=1", "enabled=0")
+  end
+end
+execute "yum update -y --enablerepo=city-fan.org libcurl"
+
 # firewalld停止、無効化
 service "firewalld" do
 	action [:stop, :disable]
