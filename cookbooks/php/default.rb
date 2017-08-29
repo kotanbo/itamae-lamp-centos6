@@ -1,4 +1,4 @@
-%w(php php-mbstring php-xml php-gd php-pear php-mysqlnd php-intl phpMyAdmin).each do |pkg|
+%w(php php-mbstring php-xml php-gd php-pear php-mysqlnd php-intl phpMyAdmin php-openssl mod_ssl).each do |pkg|
   package pkg do
     options "--enablerepo=remi-php56"
   end
